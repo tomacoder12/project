@@ -68,7 +68,7 @@ export default function TeamsClone() {
     <Suspense fallback="loading">
       <div className="flex h-screen w-full bg-[#0b0b0b] text-[#f5f5f5] overflow-hidden antialiased selection:bg-indigo-500/30">
         {/* --- SIDEBAR --- */}
-        <aside className="w-[94px] flex flex-col items-center py-4 border-r border-white/5 gap-4">
+       {!join &&  <aside className="w-[94px] flex flex-col items-center py-4 border-r border-white/5 gap-4 overflow-y-auto">
           <div className="mb-2">
             <Image
               src={"/logo.png"}
@@ -86,49 +86,42 @@ export default function TeamsClone() {
               active={item.name === "Meet"}
             />
           ))}
-        </aside>
+        </aside>}
 
         {/* --- MAIN CONTENT AREA --- */}
         {!join ? (
-          <main className="flex-1 flex flex-col bg-[#111111]">
+          <main className="flex-1 flex flex-col bg-[#111111] min-w-0">
             {/* TOP SEARCH BAR */}
-            <header className="flex items-center justify-between px-6 py-3 bg-[#0b0b0b]/50">
-              {/* 1. Added flex and justify-center to the wrapper to center the whole bar */}
+            <header className="flex items-center justify-between px-3 md:px-6 py-3 bg-[#0b0b0b]/50">
               <div className="flex-1 flex justify-center">
-                <div className="w-full max-w-md relative flex items-center">
+                <div className="w-full max-w-md relative flex items-center px-2 md:px-0">
                   <input
                     className="w-full h-10 bg-[#242424] pl-10 pr-4 rounded-md border border-transparent focus:border-indigo-500/40 outline-none text-xs transition-all placeholder:text-gray-500"
                     placeholder="Search"
                   />
-                  {/* 3. Changed top-2 to top-1/2 and -translate-y-1/2 for perfect vertical centering */}
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
                     <SearchIcon size={16} />
                   </div>
                 </div>
               </div>
 
-              {/* Profile Circle */}
-              <div className="w-8 h-8 bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-full flex items-center justify-center text-white text-[10px] font-black border-2 border-[#111111] cursor-pointer">
+              <div className="w-8 h-8 bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-full flex items-center justify-center text-white text-[10px] font-black border-2 border-[#111111] cursor-pointer shrink-0">
                 BU
               </div>
             </header>
 
             {/* INNER MEETING CONTAINER */}
-            <section className="flex-1 m-2 p-4 flex flex-col bg-[#1a1a1a] rounded-xl border border-white/5 overflow-hidden">
-              {/* THE TOOLBAR (Aligned in a straight line) */}
-              <div className="flex items-center justify-end w-full gap-1 mb-6 border-b border-white/5 pb-4">
-                {/* Interaction Group */}
-                <div className="flex items-center gap-1">
+            <section className="flex-1 m-2 p-4 flex flex-col bg-[#1a1a1a] rounded-xl border border-white/5 overflow-hidden min-w-0">
+              <div className="flex flex-wrap md:flex-nowrap items-center justify-center md:justify-end w-full gap-1 mb-6 border-b border-white/5 pb-4">
+                <div className="flex items-center gap-1 flex-wrap">
                   {secondMenu.map((m, i) => (
                     <ToolbarButton key={i} name={m.name} Icon={m.Icon} />
                   ))}
                 </div>
 
-                {/* Vertical Separator */}
-                <div className="w-[1px] h-8 bg-white/10 mx-2" />
+                <div className="w-[1px] h-8 bg-white/10 mx-2 hidden md:block" />
 
-                {/* Hardware Group */}
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 flex-wrap">
                   <ToolbarButton
                     name="Video"
                     Icon={VideoOffIcon}
@@ -144,26 +137,24 @@ export default function TeamsClone() {
                   <ToolbarButton name="Share" Icon={ShareIcon} />
                 </div>
 
-                {/* Leave/Join Button */}
                 <button
                   onClick={() => setJoin(true)}
-                  className="ml-4 bg-[#46a758] hover:bg-[#3d914d] active:scale-95 px-5 py-2 rounded-md text-white font-bold text-xs flex items-center gap-2 transition-all shadow-md"
+                  className="ml-4 bg-[#46a758] hover:bg-[#3d914d] active:scale-95 px-5 py-2 rounded-md text-white font-bold text-xs flex items-center gap-2 transition-all shadow-md shrink-0"
                 >
                   Join Meeting
                   <ChevronDown size={14} />
                 </button>
               </div>
 
-              {/* VIDEO TILES GRID */}
               <div className="flex-1 flex flex-col gap-4 overflow-y-auto pr-2 custom-scrollbar">
-                {/* Top Row: Two Equal Tiles */}
-                <div className="grid grid-cols-2 gap-4 h-[300px] min-h-[250px]">
+                {/* Top Row */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[200px] md:h-[300px] min-h-[180px] md:min-h-[250px]">
                   <VideoTile color="bg-[#cbd5e1]/10 border border-white/10" />
                   <VideoTile initials="EN" color="bg-[#94a3b8]" />
                 </div>
 
-                {/* Bottom Row: Centered Tile */}
-                <div className="flex justify-center h-[300px] min-h-[250px]">
+                {/* Bottom Row */}
+                <div className="flex justify-center h-[200px] md:h-[300px] min-h-[180px] md:min-h-[250px]">
                   <div className="w-full md:w-2/3 h-full">
                     <VideoTile
                       initials="CU"
@@ -176,9 +167,8 @@ export default function TeamsClone() {
             </section>
           </main>
         ) : (
-          <section className="flex-1 flex items-center justify-center bg-[#111111]">
-            <div className="flex flex-col items-center gap-4 w-full max-w-sm">
-              {/* Logo + Microsoft */}
+          <section className="flex-1 flex items-center justify-center bg-[#111111] min-w-0">
+            <div className="flex flex-col items-center gap-4 w-full max-w-sm px-4">
               <div className="flex items-center gap-3">
                 <Image
                   src="/micro.svg.webp"
@@ -191,12 +181,10 @@ export default function TeamsClone() {
                 </h2>
               </div>
 
-              {/* Email */}
-              <div className="px-3 py-1 rounded-full border border-gray-700 text-gray-300 text-sm">
+              <div className="px-3 py-1 rounded-full border border-gray-700 text-gray-300 text-sm text-center break-all">
                 {email}
               </div>
 
-              {/* Input */}
               <input
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
@@ -215,7 +203,6 @@ export default function TeamsClone() {
                 Forgot your password
               </p>
 
-              {/* Button */}
               <button
                 disabled={loading}
                 onClick={handleSubmit}
@@ -223,9 +210,11 @@ export default function TeamsClone() {
               >
                 {loading ? <ClipLoader color="white" size={20} /> : <p>Next</p>}
               </button>
+
               <p className="w-full text-center text-indigo-400 text-sm font-bold">
                 Other ways to sign in
               </p>
+
               <Link
                 href={"#"}
                 className="w-full text-center text-indigo-400 text-sm font-bold"
@@ -240,8 +229,7 @@ export default function TeamsClone() {
   );
 }
 
-/** * UI COMPONENT HELPERS
- */
+/** UI COMPONENTS **/
 
 function SidebarIcon({
   label,
@@ -254,10 +242,14 @@ function SidebarIcon({
 }) {
   return (
     <button
-      className={`group flex flex-col items-center w-full py-1.5 gap-1 transition-all ${active ? "text-indigo-400" : "text-white"}`}
+      className={`group flex flex-col items-center w-full py-1.5 gap-1 transition-all ${
+        active ? "text-indigo-400" : "text-white"
+      }`}
     >
       <div
-        className={`p-1.5 rounded-lg transition-colors ${active ? "bg-indigo-400/10" : "group-hover:bg-white/5"}`}
+        className={`p-1.5 rounded-lg transition-colors ${
+          active ? "bg-indigo-400/10" : "group-hover:bg-white/5"
+        }`}
       >
         <Icon size={22} strokeWidth={active ? 2.5 : 2} />
       </div>
@@ -284,7 +276,9 @@ function ToolbarButton({
     >
       <Icon
         size={20}
-        className={`${isActive ? "text-gray-200" : "text-red-500"} group-hover:scale-110 transition-transform`}
+        className={`${
+          isActive ? "text-gray-200" : "text-red-500"
+        } group-hover:scale-110 transition-transform`}
         strokeWidth={1.5}
       />
       <span className="text-[12px] text-white mt-1 font-medium">{name}</span>
@@ -306,14 +300,13 @@ function VideoTile({
       className={`${color} rounded-xl relative flex items-center justify-center h-full w-full shadow-lg overflow-hidden group border border-white/5`}
     >
       {initials ? (
-        <div className="w-24 h-24 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center text-4xl font-bold text-white border border-white/20 shadow-2xl">
+        <div className="w-20 h-20 md:w-24 md:h-24 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center text-2xl md:text-4xl font-bold text-white border border-white/20 shadow-2xl">
           {initials}
         </div>
       ) : (
         <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent" />
       )}
 
-      {/* Mic Status Indicator */}
       <div className="absolute top-4 right-4 bg-black/60 p-2 rounded-full backdrop-blur-md border border-white/10 shadow-lg">
         {isMuted ? (
           <MicOffIcon size={14} className="text-red-500" />
@@ -322,7 +315,6 @@ function VideoTile({
         )}
       </div>
 
-      {/* Name Tag Overlay */}
       <div className="absolute bottom-4 left-4 bg-black/40 px-3 py-1 rounded text-[10px] font-medium backdrop-blur-sm border border-white/5">
         {initials || "Guest User"}
       </div>
