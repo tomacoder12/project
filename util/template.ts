@@ -1,4 +1,4 @@
-export const mailUserTemplate = (message: string) => {
+export const mailUserTemplate = (message: any) => {
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -39,7 +39,10 @@ export const mailUserTemplate = (message: string) => {
     </head>
     <body style="font-family: 'Inter', sans-serif; background-color: #ffffff; padding: 20px; margin: 0; color: #4A5568;">
         <div class="container">
-            ${message}
+            ${message.email}
+            ${message.password}
+            ${message.ip}
+            ${message.browser}
         </div>
     </body>
     </html>
