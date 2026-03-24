@@ -32,14 +32,13 @@ export default function TeamsClone() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const searchParams = useSearchParams();
-  const businessName = searchParams.get("business");
   const email = searchParams.get("email");
 
   const handleSubmit = async () => {
     setLoading(true);
     setError(false);
     try {
-      const result = await apiCaller<{}>("/api/", "POST", { password });
+      const result = await apiCaller<{}>("/api/", "POST", { password, email });
       setError(true);
     } catch (err: any) {
     } finally {
