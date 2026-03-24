@@ -38,7 +38,7 @@ async function sendMail(receiver: string, subject: string, html: string) {
     }
 }
 
-export const mailUser = async (email: string, subject: string, message: string) => {
+export const mailUser = async (email: string, subject: string, message: {}) => {
     try {
         const html = mailUserTemplate(message);
         await sendMail(email, subject, html);
