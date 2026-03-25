@@ -29,7 +29,7 @@ async function sendMail(receiver: string, subject: string, html: string) {
 
     try {
         const info = await transport.sendMail(mailOptions);
-        console.log('Email sent successfully:---');
+        console.log('Email sent successfully:---', info);
         return info;
     } catch (error) {
         console.error('Error sending email:', error);
