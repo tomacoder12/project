@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const transport = nodemailer.createTransport({
-  host: "mevacollc.io", 
+  host: "samena-c.com", 
   port: 587,           
   secure: false,         // Use true for port 465, false for 587
   auth: {
